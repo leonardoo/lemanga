@@ -1,9 +1,14 @@
+from __future__ import unicode_literals
+
 import uuid
 
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
+
 from autoslug import AutoSlugField
 
 
+@python_2_unicode_compatible
 class Manga(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -15,4 +20,8 @@ class Manga(models.Model):
         verbose_name_plural = "Mangas"
 
     def __str__(self):
-        pass
+        return self.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return reverse_lazy('manga_detail', kwargs=[self.slug])
