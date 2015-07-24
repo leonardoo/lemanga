@@ -1,0 +1,11 @@
+{% extends 'manga/manga/list.html' %}
+
+{% block content %}
+    {% for obj in list  %}
+        {% block content-objs %}
+            <a href="{{obj.get_absolute_url}}">
+                {{obj}}
+            </a>
+        {% endblock content-objs %}
+    {% endfor %}
+{% endblock content %}

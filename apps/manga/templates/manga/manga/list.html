@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for obj in list  %}
+        {% block content-objs %}
+            <a href="{{obj.get_absolute_url}}">
+                {{obj.name}}
+            </a>
+        {% endblock content-objs %}
+    {% endfor %}
+{% endblock content %}
