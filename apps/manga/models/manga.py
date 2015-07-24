@@ -24,4 +24,4 @@ class Manga(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return reverse_lazy('manga_detail', kwargs=[self.slug])
+        return reverse_lazy('detail-manga', args=[self.slug])

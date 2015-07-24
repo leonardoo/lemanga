@@ -20,7 +20,13 @@ class Chapter(models.Model):
         verbose_name_plural = "Chapters"
 
     def __str__(self):
-        return "{} #{}".format(str(self.manga), self.number)
+        return "{0} #{1}".format(str(self.manga), self.number)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return reverse_lazy('manga_chapter', args=[self.manga.slug,
+                                                   self.number,
+                                                   self.user])
 
 
 @python_2_unicode_compatible
@@ -36,4 +42,4 @@ class ChapterPicture(models.Model):
         verbose_name_plural = "ChapterPictures"
 
     def __str__(self):
-        return "{} :{}".format(str(self.chapter), self.number)
+        return "{0} :{1}".format(str(self.chapter), self.number)
