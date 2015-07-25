@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import uuid
 
+from django.core.urlresolvers import reverse_lazy
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
@@ -22,6 +23,5 @@ class Manga(models.Model):
     def __str__(self):
         return self.name
 
-    @models.permalink
     def get_absolute_url(self):
-        return reverse_lazy('detail-manga', args=[self.slug])
+        return reverse_lazy('detail-manga', kwargs={"name": self.slug})
