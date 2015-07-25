@@ -4,10 +4,13 @@ from django.test import TestCase
 
 from apps.manga.models import Manga
 
-from ..factories.manga import MangaFactory
+from ..factories import MangaFactory
 
 
 class MangaModelTest(TestCase):
+
+    def setUp(self):
+        MangaFactory.reset_sequence(0)
 
     def test_create_manga(self):
         manga = Manga(name="test1")
