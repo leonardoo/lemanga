@@ -9,6 +9,7 @@ class MangaListView(DynamicTemplateMixin, generic.ListView):
     model = models.Manga
     paginate_by = 25
     template_name_suffix = 'list'
+    context_object_name = "list"
 
 
 class MangaDetailView(DynamicTemplateMixin, generic.DetailView):
