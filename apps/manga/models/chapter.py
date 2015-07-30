@@ -35,7 +35,7 @@ class ChapterPicture(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     chapter = models.ForeignKey("Chapter")
     number = models.IntegerField("")
-    picture = models.ImageField()
+    picture = models.ImageField(default = ".")
 
     class Meta:
         verbose_name = "ChapterPicture"
