@@ -15,8 +15,18 @@ class MangaViewsTest(TestCase):
     def test_response200_list_view(self):
         response = self.get_check_200('list-mangas')
 
-    def test_testplus_get(self):
+    def test_get_list(self):
         self.get('list-mangas')
         self.response_200()
         self.assertInContext('list')
         self.assertEqual(self.context['list'].count(), 4)
+
+    def test_get_create(self):
+        self.get('create-manga')
+        self.response_200()
+        self.assertInContext('form')
+
+    def test_get_create(self):
+        self.post('create-manga', follow=True, data={'name': "manga-tests"})
+        self.response_200()
+        self.assertInContext('list')

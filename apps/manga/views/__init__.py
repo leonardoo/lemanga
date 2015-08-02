@@ -1,1 +1,1 @@
-from .manga import MangaListView, MangaDetailView
+from .manga import MangaListView, MangaDetailView, MangaCreateView

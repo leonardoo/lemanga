@@ -1,7 +1,7 @@
 {% extends 'manga/manga/list.html' %}
 
 {% block content %}
-    {% for obj in list  %}
+    {% for obj in list %}
         {% block content-objs %}
             <a href="{{obj.get_absolute_url}}">
                 {{obj}}
