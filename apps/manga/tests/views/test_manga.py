@@ -33,7 +33,6 @@ class MangaViewsTest(TestCase):
     def test_get_create(self):
         response = self.post('create-manga', follow=True, data={'name': "manga-tests"})
         self.response_200()
-        self.assertInContext('list')
 
     @unittest.expectedFailure
     def test_get_detail(self):
