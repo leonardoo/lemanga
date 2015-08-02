@@ -1,8 +1,12 @@
 from __future__ import unicode_literals
 
+import unittest
+
 from test_plus.test import TestCase
 
 from ..factories import MangaFactory
+
+from ...models import Manga
 
 
 class MangaViewsTest(TestCase):
@@ -27,6 +31,16 @@ class MangaViewsTest(TestCase):
         self.assertInContext('form')
 
     def test_get_create(self):
-        self.post('create-manga', follow=True, data={'name': "manga-tests"})
+        response = self.post('create-manga', follow=True, data={'name': "manga-tests"})
         self.response_200()
         self.assertInContext('list')
+
+    @unittest.expectedFailure
+    def test_get_detail(self):
+        self.get('detail-manga')
+        self.response_200()
+
+    def test_get_detail_with_manga(self):
+        manga = Manga.objects.all()[0]
+        self.get('detail-manga', name=manga.slug)
+        self.response_200()
