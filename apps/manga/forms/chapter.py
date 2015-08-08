@@ -1,5 +1,5 @@
 from django import forms
-from django.forms.models import BaseModelFormSet
+from django.forms import models as formsets
 
 from .. import models
 
@@ -16,5 +16,11 @@ class ChapterPrictureForm(forms.ModelForm):
         fields = ["number", "picture"]
 
 
-ChapterPrictureFormSet = modelformset_factory(models.ChapterPricture,
-                                              form=ChapterPrictureForm)
+class _ChapterPrictureFormSetBase(formsets.BaseInlineFormSet):
+    pass
+
+
+ChapterPrictureFormSet = formsets.inlineformset_factory(models.Chapter,
+                                                        models.ChapterPicture,
+                                                        form=ChapterPrictureForm,
+                                                        extra=2)
