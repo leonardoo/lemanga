@@ -1,6 +1,7 @@
-
 from django.shortcuts import render, redirect
+from django.views import generic
 
+from . import mixin
 from .. import forms
 from .. import models
 
@@ -21,3 +22,13 @@ def manga_create_chapter(request, **kwargs):
             return redirect(manga.get_absolute_url())
     return render(request, 'manga/chapter/create.html',
                   {'form': form, 'formset': formset})
+
+
+class ChapterDetailView(mixin.DynamicTemplateMixin,
+                        mixin.MultipleSlugsMixin,
+                        generic.DetailView):
+    model = models.ChapterPicture
+    slug_url_kwargs = ["name", "chapter", "user", "number"]
+    slug_fields = ["chapter__manga__slug", "chapter__number",
+                   "chapter__upload_by_id", "number"]
+    template_name_suffix = 'detail'

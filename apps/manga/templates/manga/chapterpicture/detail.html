@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load manga %}
+
+{% block content %}
+    <section>
+        {% get_object chapterpicture.next as next %}
+        {% get_object chapterpicture.previous as previous %}
+        {% if previous %}
+            <div>
+                <a href="{{previous.get_absolute_url}}">previous</a>
+            </div>
+        {% endif %}
+            {{obj}}
+            <img src="{{chapterpicture.picture.url}}" alt="">
+        {% if next %}
+            <div>
+                <a href="{{next.get_absolute_url}}">next</a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock content %}
