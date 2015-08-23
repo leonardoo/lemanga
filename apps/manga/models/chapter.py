@@ -24,9 +24,10 @@ class Chapter(models.Model):
         return "{0} #{1}".format(str(self.manga), self.number)
 
     def get_absolute_url(self):
-        return reverse_lazy('manga_chapter', args=[self.manga.slug,
+        return reverse_lazy('manga-chapter', args=[self.manga.slug,
                                                    self.number,
-                                                   self.user])
+                                                   self.upload_by_id,
+                                                   1])
 
 
 @python_2_unicode_compatible
@@ -35,11 +36,36 @@ class ChapterPicture(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     chapter = models.ForeignKey("Chapter")
     number = models.IntegerField("")
-    picture = models.ImageField(default = ".")
+    picture = models.ImageField()
 
     class Meta:
+        ordering = ['number']
         verbose_name = "ChapterPicture"
         verbose_name_plural = "ChapterPictures"
 
     def __str__(self):
         return "{0} :{1}".format(str(self.chapter), self.number)
+
+    def get_absolute_url(self):
+        return reverse_lazy('manga-chapter', args=[self.chapter.manga.slug,
+                                                   self.chapter.number,
+                                                   self.chapter.upload_by_id,
+                                                   self.number])
+
+    def _get_object(self, number):
+        model = type(self)
+        try:
+            model = model.objects.select_related("chapter", "chapter__manga")
+            return model.get(chapter=self.chapter,
+                             number=number)
+        except Exception as e:
+            print e.message
+            return None
+
+    @property
+    def next(self):
+        return self._get_object(self.number+1)
+
+    @property
+    def previous(self):
+        return self._get_object(self.number-1)
