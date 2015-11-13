@@ -2,6 +2,8 @@
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ImproperlyConfigured
+from django.http import Http404
+from django.utils.translation import ugettext_lazy as _
 from django.utils.decorators import method_decorator
 
 
@@ -49,7 +51,6 @@ class MultipleSlugsMixin(object):
             queryset = queryset.filter(pk=pk)
         # Next, try looking up the slugs.
         if slug:
-            print queryset
             queryset = queryset.filter(**self.get_slug_fields())
         # If none of those are defined, it's an error.
         if pk is None and slug is None:
@@ -80,8 +81,6 @@ class MultipleSlugsMixin(object):
         fields = enumerate(self.slug_fields)
         filters = {}
         for index, field in fields:
-            print field
             data = self.kwargs.get(self.slug_url_kwargs[index], None)
             filters.update({field: data})
-        print filters
         return filters

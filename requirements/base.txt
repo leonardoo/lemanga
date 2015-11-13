@@ -1,6 +1,6 @@
 #base
-Django==1.8.3
-Pillow==2.9
+Django==1.8.6
+Pillow==3.0
 
 #templates
 #=======
@@ -8,3 +8,7 @@ django-widget-tweaks==1.4.1
 
 #slug
 django-autoslug
+
+#formset
+
+django-extra-views

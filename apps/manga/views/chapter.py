@@ -1,27 +1,42 @@
 from django.shortcuts import render, redirect
 from django.views import generic
 
+import extra_views
+
 from . import mixin
 from .. import forms
 from .. import models
 
 
-def manga_create_chapter(request, **kwargs):
-    Form = forms.ChapterForm
-    FormSet = forms.ChapterPrictureFormSet
-    manga = models.Manga.objects.get(slug=kwargs.get("name"))
-    instance = models.Chapter(upload_by=request.user, manga=manga)
-    form = Form(request.POST or None,
-                instance=instance)
-    formset = FormSet(request.POST or None, request.FILES or None,
-                      instance=instance)
-    if request.method == 'POST':
-        if form.is_valid() and formset.is_valid():
-            form.save()
-            formset.save()
-            return redirect(manga.get_absolute_url())
-    return render(request, 'manga/chapter/create.html',
-                  {'form': form, 'formset': formset})
+
+class ChapterPictureInline(extra_views.InlineFormSet):
+    model = models.ChapterPicture
+    form_class = forms.ChapterForm
+    can_delete = False
+    extra = 1
+
+
+class CreateChapterView(mixin.DynamicTemplateMixin,
+                        extra_views.NamedFormsetsMixin,
+                        extra_views.CreateWithInlinesView):
+
+    model = models.Chapter
+    form_class = forms.ChapterForm
+    context_object_name = "form"
+    inlines = [ChapterPictureInline]
+    inlines_names = ['pictures']
+    template_name_suffix = "create"
+    template_name = "manga/chapter/create.html"
+
+    def get_form_kwargs(self):
+        """
+        Returns the keyword arguments for instantiating the form.
+        """
+        manga = models.Manga.objects.get(slug=self.kwargs.get("name"))
+        instance = models.Chapter(upload_by=self.request.user, manga=manga)
+        kwargs = super(CreateChapterView, self).get_form_kwargs()
+        kwargs.update({'instance': instance})
+        return kwargs
 
 
 class ChapterDetailView(mixin.DynamicTemplateMixin,

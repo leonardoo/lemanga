@@ -59,7 +59,6 @@ class ChapterPicture(models.Model):
             return model.get(chapter=self.chapter,
                              number=number)
         except Exception as e:
-            print e.message
             return None
 
     @property
