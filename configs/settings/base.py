@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import pathlib
 
-BASE_DIR = pathlib.PosixPath(".").absolute()
 
+BASE_DIR = pathlib.Path(".").absolute()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -39,9 +39,13 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-CORE_APPS = []
+CORE_APPS = [
+    'pipeline',
+]
 
-APPS = ['apps.manga']
+APPS = [
+    'apps.manga',
+]
 
 INSTALLED_APPS = DJANGO_APPS + CORE_APPS + APPS
 
@@ -116,3 +120,29 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = 'public/'
 MEDIA_URL = '/media/'
+
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    #"apps.reuse.storage.FileSystemFinder",
+    'pipeline.finders.PipelineFinder',
+)
+
+STATICFILES_STORAGE = 'apps.reuse.storage.PipelineStorage'
+
+PIPELINE_JS = {
+    'stats': {
+        'source_filenames': (
+          'js/vendor/*.js',
+        ),
+        'output_filename': 'js/stats.js',
+    },
+    "app.templates":{
+        "source_filenames":{
+            "js/app/templates/*.jst",
+        },
+        'output_filename': 'js/app.templates.js',
+    }
+}
+

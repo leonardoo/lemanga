@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
-
+{% load pipeline %}
 {% block content %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form }}
-        {{ formset.management_form }}
-        {% for form_detail in formset %}
+        {{ pictures.management_form }}
+        {% for form_detail in pictures %}
+        <div>
+            <input name="filesToUpload[]" id="filesToUpload" type="file" multiple="" />
+        </div>
         <div>
             {{ form_detail }}
         </div>
@@ -13,3 +16,11 @@
         <input type="submit" value="Submit" />
     </form>
 {% endblock content %}
+{% block javascript %}
+    {% javascript 'app.templates' %}
+<script>
+    $(document).ready(function(){
+
+    });
+</script>
+{% endblock javascript %}

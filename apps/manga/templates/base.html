@@ -1,10 +1,15 @@
-<html>  
+{% load staticfiles %}
+{% load pipeline %}
+<html>
     <head>
-        
+        {% javascript 'stats' %}
     </head>
     <body>
         {% block content %}
             
         {% endblock content %}
+        {% block javascript %}
+
+        {% endblock javascript %}
     </body>
 </html>
