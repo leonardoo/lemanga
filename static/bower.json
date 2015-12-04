@@ -1,0 +1,48 @@
+{
+  "name": "lemanga",
+  "homepage": "https://github.com/leonardoo/lemanga",
+  "authors": [
+    "leonardoo <leonardoorozcop@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "bowerMove": {
+    "bootstrap": {
+      "dist/css/*.css": "css/",
+      "fonts/*": "fonts/",
+      "dist/js/bootstrap.js": "js/vendor/"
+    },
+    "underscore": {
+      "underscore.js": "js/vendor/"
+    },
+    "jquery": {
+      "dist/jquery.js": "js/vendor/"
+    },
+    "handlebars": {
+      "handlebars.js": "js/vendor/"
+    },
+    "backbone": {
+      "backbone.js": "js/vendor/"
+    }
+  },
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "backbone": "~1.2.3",
+    "jquery-mobile": "~1.4.5",
+    "jquery-ui": "~1.11.4",
+    "backbone.marionette": "~2.4.3",
+    "underscore": "~1.8.3",
+    "handlebars": "~4.0.4"
+
+  }
+}
